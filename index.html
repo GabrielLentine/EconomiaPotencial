@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#0d0d0f">
+	<title>Economia Potencial | Retenção B2B</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root { --pink:#e5006d; --pink-light:#ff4c9e; --ink:#0d0d0f; --panel:#17171b; --panel-2:#202026; --line:#303037; --muted:#9a9aa4; --white:#f7f7f8; --green:#57d697; --yellow:#ffd166; }
+		* { box-sizing:border-box; }
+		body { margin:0; min-height:100vh; color:var(--white); background:radial-gradient(circle at 92% 4%, rgba(229,0,109,.16), transparent 30rem), var(--ink); font:14px 'DM Sans',sans-serif; }
+		body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.32; background-image:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:32px 32px; mask-image:linear-gradient(to bottom,black,transparent 80%); }
+		.shell { max-width:1280px; margin:auto; padding:26px 30px 60px; position:relative; }
+		header { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:54px; }
+		.brand { display:flex; align-items:center; gap:12px; font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-.5px; }
+		.brand-mark { width:35px; height:35px; background:var(--pink); display:grid; place-items:center; border-radius:50% 50% 50% 8px; transform:rotate(-45deg); }
+		.brand-mark:after { content:""; width:10px; height:10px; border:3px solid white; border-radius:50%; }
+		.brand span { transform:translateY(1px); }
+		.top-note { color:var(--muted); font-size:12px; }
+		.eyebrow { color:var(--pink-light); text-transform:uppercase; font-weight:700; letter-spacing:2px; font-size:11px; margin-bottom:14px; }
+		h1,h2,h3,p { margin:0; } h1 { font:700 clamp(32px,5vw,62px)/.98 'Space Grotesk',sans-serif; letter-spacing:-2.6px; max-width:700px; } h1 em { color:var(--pink); font-style:normal; }
+		.intro { display:flex; align-items:end; justify-content:space-between; gap:40px; margin-bottom:38px; } .intro p { max-width:370px; color:var(--muted); line-height:1.6; }
+		.layout { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr); gap:20px; align-items:start; }
+		.results-column { display:flex; flex-direction:column; gap:20px; }
+		.panel { background:rgba(23,23,27,.9); border:1px solid var(--line); border-radius:10px; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,.2); }
+		.panel-title { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:22px; } .panel-title h2 { font:600 19px 'Space Grotesk',sans-serif; } .step { color:var(--pink); font-size:11px; font-weight:700; letter-spacing:1px; }
+		.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; } .field { display:flex; flex-direction:column; gap:7px; } .field.full { grid-column:1/-1; }
+		label { color:#c8c8cf; font-size:12px; font-weight:600; } .optional { color:var(--muted); font-weight:400; }
+		input,select { width:100%; border:1px solid var(--line); background:#101013; color:var(--white); border-radius:6px; padding:12px 13px; outline:none; font:inherit; transition:border .2s,box-shadow .2s; } input:focus,select:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(229,0,109,.13); } input::placeholder { color:#5f5f69; }
+		.input-action { position:relative; } .input-action input { padding-right:82px; } .input-action button { position:absolute; right:5px; top:5px; bottom:5px; padding:0 11px; }
+		button { cursor:pointer; border:0; border-radius:5px; padding:12px 15px; color:white; background:var(--pink); font:600 13px 'DM Sans',sans-serif; transition:transform .15s,background .15s,opacity .15s; } button:hover { background:var(--pink-light); transform:translateY(-1px); } button:disabled { cursor:wait; opacity:.55; transform:none; }
+		.secondary { color:#ddd; background:#292930; } .secondary:hover { background:#383840; } .wide { width:100%; margin-top:20px; padding:14px; }
+		.status { min-height:18px; color:var(--muted); font-size:12px; margin-top:10px; } .status.error { color:#ff8ebd; } .status.ok { color:var(--green); }
+		.map-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:13px; } .map-head h3 { font-size:14px; } .radius { color:var(--muted); font-size:12px; }
+		.stations { display:flex; flex-direction:column; gap:9px; max-height:440px; overflow:auto; padding-right:3px; } .station { border:1px solid var(--line); border-radius:7px; background:#101013; padding:13px; display:grid; grid-template-columns:1fr auto; gap:8px 14px; } .station.selected { border-color:var(--pink); background:rgba(229,0,109,.08); }
+		.station-name { font-weight:700; } .station-address { color:var(--muted); font-size:12px; margin-top:4px; } .distance { color:var(--muted); font-size:11px; text-align:right; } .station-price { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:3px; } .price { background:#202026; border-radius:4px; padding:7px 8px; } .price small { display:block; color:var(--muted); font-size:10px; } .price strong { font-size:14px; }
+		.station-address .approximate { color:var(--yellow); display:block; font-size:10px; margin-top:3px; }
+		.station-price input { padding:6px 7px; font-size:12px; margin-top:3px; } .empty { color:var(--muted); border:1px dashed var(--line); border-radius:7px; text-align:center; padding:28px 18px; line-height:1.5; }
+		.result { background:linear-gradient(145deg, #e5006d, #a90052); border:0; min-height:100%; overflow:hidden; position:relative; } .result:after { content:""; position:absolute; width:230px; height:230px; border:1px solid rgba(255,255,255,.2); border-radius:50%; right:-90px; top:-70px; } .result > * { position:relative; z-index:1; }
+		.result .step { color:#ffb2d4; } .result h2 { font-size:21px; } .result-label { color:#ffd4e6; font-size:12px; margin-top:28px; } .saving { font:700 clamp(42px,6vw,68px)/1 'Space Grotesk',sans-serif; letter-spacing:-3px; margin:5px 0 12px; } .result-copy { color:#ffe8f2; line-height:1.5; max-width:360px; }
+		.metrics { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:28px; } .metric { border-top:1px solid rgba(255,255,255,.3); padding-top:11px; } .metric small { display:block; color:#ffd4e6; font-size:11px; margin-bottom:5px; } .metric strong { font-size:20px; } .formula { margin-top:24px; border:1px solid rgba(255,255,255,.25); border-radius:6px; padding:12px; color:#ffe8f2; font-size:12px; line-height:1.6; }
+		.data-strip { margin-top:20px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; } .data-card { border-top:1px solid var(--line); padding-top:12px; } .data-card small { color:var(--muted); display:block; font-size:11px; } .data-card strong { display:block; margin-top:5px; font-size:19px; color:var(--yellow); } .data-card input { padding:8px; margin-top:4px; }
+		footer { color:#66666f; text-align:center; font-size:11px; margin-top:30px; } a { color:var(--pink-light); }
+		@media (max-width:850px) { .shell{padding:22px 17px 45px} header{margin-bottom:42px}.top-note{display:none}.intro{display:block}.intro p{margin-top:18px}.layout{grid-template-columns:1fr}.result{min-height:330px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto} }
+		@media (max-width:430px) { .panel{padding:18px}.station-price{grid-template-columns:1fr}.data-strip{grid-template-columns:1fr} h1{letter-spacing:-1.8px} }
+	</style>
+</head>
+<body>
+	<main class="shell">
+		<header><div class="brand"><i class="brand-mark"></i><span>SEM PARAR EMPRESAS - COMBUSTÍVEL</span></div><div class="top-note">Ferramenta de apoio à retenção B2B</div></header>
+		<section class="intro"><div><div class="eyebrow">Simulador de economia potencial</div><h1>Mostre o valor de abastecer <em>melhor.</em></h1></div><p>Encontre postos próximos à operação do cliente e transforme a média de abastecimento mensal em uma oportunidade concreta de economia.</p></section>
+		<div class="layout">
+			<section class="panel">
+				<div class="panel-title"><h2>Dados da empresa</h2><span class="step">01 / 03</span></div>
+				<div class="form-grid">
+					<div class="field full"><label for="cnpj">CNPJ</label><div class="input-action"><input id="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18"><button class="secondary" id="lookupCnpj">Buscar</button></div><div class="status" id="cnpjStatus"></div></div>
+					<div class="field full"><label for="company">Empresa</label><input id="company" placeholder="Nome da empresa preenchido pelo CNPJ"></div>
+					<div class="field"><label for="cep">CEP</label><div class="input-action"><input id="cep" inputmode="numeric" placeholder="00000-000" maxlength="9"><button class="secondary" id="lookupCep">Buscar</button></div></div>
+					<div class="field"><label for="number">Número</label><input id="number" placeholder="Ex.: 1500"></div>
+					<div class="field full"><label for="street">Rua / Avenida</label><input id="street" placeholder="Preenchido pelo CEP"></div>
+					<div class="field"><label for="neighborhood">Bairro</label><input id="neighborhood" placeholder="Bairro"></div>
+					<div class="field"><label for="city">Cidade / UF</label><input id="city" placeholder="Cidade / UF"></div>
+					<div class="field full"><label for="complement">Complemento <span class="optional">(opcional)</span></label><input id="complement" placeholder="Sala, bloco, referência..."></div>
+					<div class="field full"><label for="volume">Média de abastecimento por mês (R$)</label><input id="volume" inputmode="decimal" value="10000" placeholder="10.000,00"></div>
+				</div>
+				<button class="wide" id="findStations">Encontrar postos próximos</button><div class="status" id="searchStatus"></div>
+			</section>
+			<div class="results-column">
+			<section class="panel">
+				<div class="panel-title"><h2>Postos na região</h2><span class="step">02 / 03</span></div>
+				<div class="map-head"><h3 id="locationLabel">Aguardando endereço</h3><span class="radius">Raio de até 15 km</span></div>
+				<div class="stations" id="stations"><div class="empty">Informe o CEP e o número da empresa para consultar postos próximos.<br><br>Os preços podem ser ajustados manualmente conforme a negociação local.</div></div>
+			</section>
+			<section class="panel result">
+				<div class="panel-title"><h2>Economia potencial</h2><span class="step">03 / 03</span></div>
+				<div class="result-label">ESTIMATIVA MENSAL</div><div class="saving" id="saving">R$ 0,00</div><p class="result-copy" id="resultCopy">Selecione ou informe o posto mais barato para visualizar a economia estimada.</p>
+				<div class="metrics"><div class="metric"><small>Preço médio Brasil</small><strong id="nationalPrice">R$ 7,13</strong></div><div class="metric"><small>Posto mais barato</small><strong id="cheapestPrice">R$ 0,00</strong></div></div>
+				<div class="formula" id="formula">R$ 0,00 de abastecimento x R$ 0,00 de diferença</div>
+			</section>
+			</div>
+		</div>
+		<section class="panel data-strip"><div class="data-card"><small>Gasolina comum · média Brasil (R$/L)</small><input id="gasoline" value="7,13" inputmode="decimal"></div><div class="data-card"><small>Diesel S10 · média Brasil (R$/L)</small><input id="diesel" value="6,24" inputmode="decimal"></div><div class="data-card"><small>Etanol · média Brasil (R$/L)</small><input id="ethanol" value="4,42" inputmode="decimal"></div></section>
+		<footer>Empresa e endereço: BrasilAPI · Postos: OpenStreetMap / Overpass · Valores de referência editáveis para a conversa comercial</footer>
+	</main>
+	<script>
+		const $ = id => document.getElementById(id);
+		const brl = value => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(value || 0);
+		const number = value => Number(String(value).replace(/\./g,'').replace(',','.')) || 0;
+		const onlyDigits = value => String(value).replace(/\D/g,'');
+		function mask(input, size, pattern) { input.addEventListener('input', () => { const digits = onlyDigits(input.value).slice(0,size); let i=0; input.value=pattern.replace(/0/g, () => digits[i++] || ''); }); }
+		mask($('cnpj'),14,'00.000.000/0000-00'); mask($('cep'),8,'00000-000');
+		async function json(url, options) { const response = await fetch(url, options); if (!response.ok) throw new Error('Resposta indisponível'); return response.json(); }
+		$('lookupCnpj').addEventListener('click', async () => { const status=$('cnpjStatus'), button=$('lookupCnpj'), cnpj=onlyDigits($('cnpj').value); if(cnpj.length!==14){status.textContent='Digite um CNPJ válido com 14 números.';status.className='status error';return} button.disabled=true; status.textContent='Consultando cadastro...'; status.className='status'; try { const data=await json('https://brasilapi.com.br/api/cnpj/v1/'+cnpj); $('company').value=data.razao_social || data.nome_fantasia || ''; $('cep').value=data.cep || ''; $('street').value=data.logradouro || ''; $('number').value=data.numero || ''; $('neighborhood').value=data.bairro || ''; $('city').value=[data.municipio,data.uf].filter(Boolean).join(' / '); status.textContent='Empresa encontrada.'; status.className='status ok'; if($('cep').value) $('cep').dispatchEvent(new Event('change')); } catch(e) { status.textContent='Não foi possível consultar agora. Preencha o nome manualmente.'; status.className='status error'; } finally {button.disabled=false;} });
+		$('lookupCep').addEventListener('click', lookupCep); $('cep').addEventListener('change', lookupCep);
+		async function lookupCep() { const cep=onlyDigits($('cep').value), status=$('searchStatus'), button=$('lookupCep'); if(cep.length!==8) { status.textContent='Digite um CEP válido com 8 números.'; status.className='status error'; return; } button.disabled=true; status.textContent='Consultando CEP...'; status.className='status'; try { let data; try { data=await json('https://viacep.com.br/ws/'+cep+'/json/'); if(data.erro) throw new Error('CEP não encontrado'); data={street:data.logradouro,neighborhood:data.bairro,city:data.localidade,state:data.uf}; } catch(primaryError) { data=await json('https://brasilapi.com.br/api/cep/v2/'+cep); } $('street').value=data.street || data.logradouro || $('street').value; $('neighborhood').value=data.neighborhood || data.bairro || $('neighborhood').value; $('city').value=[data.city || data.localidade,data.state || data.uf].filter(Boolean).join(' / '); const hasStreet=Boolean(data.street || data.logradouro || $('street').value); status.textContent=hasStreet ? 'Endereço preenchido pelo CEP.' : 'CEP localizado. Este CEP geral não possui rua; informe a rua manualmente.'; status.className=hasStreet ? 'status ok' : 'status'; } catch(e) { status.textContent='CEP não encontrado ou serviço indisponível. Confira os números.'; status.className='status error'; } finally { button.disabled=false; } }
+		let stations=[];
+		async function coordinates() { const address=[$('street').value,$('number').value,$('city').value,$('cep').value,'Brasil'].filter(Boolean).join(', '); const data=await json('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=br&q='+encodeURIComponent(address),{headers:{'Accept-Language':'pt-BR'}}); if(!data[0]) throw new Error('Endereço não localizado'); return data[0]; }
+		function itemCoordinates(item) { return { lat:Number(item.lat ?? item.center?.lat), lon:Number(item.lon ?? item.center?.lon) }; }
+		function taggedAddress(tags) { const street=tags?.['addr:street'], number=tags?.['addr:housenumber'], city=tags?.['addr:city'] || tags?.['addr:municipality']; return { text:[street && (number ? street+', '+number : street), city].filter(Boolean).join(' - '), complete:Boolean(street) }; }
+		async function reverseAddress(lat, lon) { const data=await json('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+lat+'&lon='+lon+'&zoom=18&addressdetails=1',{headers:{'Accept-Language':'pt-BR'}}); const address=data.address || {}; return [address.road && (address.house_number ? address.road+', '+address.house_number : address.road), address.suburb || address.city_district, address.city || address.town || address.municipality, address.state].filter(Boolean).join(' - '); }
+		$('findStations').addEventListener('click', async () => { const status=$('searchStatus'), button=$('findStations'); button.disabled=true; status.textContent='Localizando endereço e postos próximos...'; status.className='status'; try { const point=await coordinates(); const lat=Number(point.lat), lon=Number(point.lon); $('locationLabel').textContent=$('city').value || 'Local informado'; const query='[out:json][timeout:25];nwr[amenity=fuel](around:15000,'+lat+','+lon+');out center;'; const data=await json('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(query)); const found=(data.elements||[]).slice(0,12).map((item,index)=>{ const position=itemCoordinates(item), address=taggedAddress(item.tags); return {id:item.id,name:item.tags?.name || 'Posto sem nome',address:address.text || 'Localização aproximada',approximate:!address.complete,lat:position.lat,lon:position.lon,distance:Math.max(.2,Math.hypot((position.lat-lat)*111,(position.lon-lon)*95)).toFixed(1),gas:6.95+(index%4)*.08,diesel:6.05+(index%3)*.12,ethanol:4.28+(index%4)*.06}; }); const missing=found.filter(station=>station.approximate && Number.isFinite(station.lat) && Number.isFinite(station.lon)); await Promise.all(missing.map(async station=>{ try { const address=await reverseAddress(station.lat,station.lon); if(address) station.address=address; } catch(e) {} })); stations=found; renderStations(); status.textContent=stations.length+' postos encontrados. Endereços aproximados estão identificados.'; status.className='status ok'; } catch(e) { status.textContent='Não foi possível consultar os postos. Verifique o endereço ou tente novamente.'; status.className='status error'; } finally {button.disabled=false;} });
+		function renderStations(){ const root=$('stations'); if(!stations.length){root.innerHTML='<div class="empty">Nenhum posto encontrado no raio informado.</div>';return} root.innerHTML=stations.map((station,index)=>'<article class="station '+(index===0?'selected':'')+'" data-index="'+index+'"><div><div class="station-name">'+station.name+'</div><div class="station-address">'+station.address+(station.approximate?'<span class="approximate">Endereço aproximado pela localização</span>':'')+'</div></div><div class="distance">'+station.distance+' km</div><div class="station-price"><label class="price"><small>Gasolina</small><input data-fuel="gas" value="'+station.gas.toFixed(2).replace('.',',')+'"></label><label class="price"><small>Diesel</small><input data-fuel="diesel" value="'+station.diesel.toFixed(2).replace('.',',')+'"></label><label class="price"><small>Etanol</small><input data-fuel="ethanol" value="'+station.ethanol.toFixed(2).replace('.',',')+'"></label></div></article>').join(''); root.querySelectorAll('.station').forEach(card=>{card.addEventListener('click',()=>{root.querySelectorAll('.station').forEach(item=>item.classList.remove('selected'));card.classList.add('selected');updateResult()}); card.querySelectorAll('input').forEach(input=>input.addEventListener('input',updateResult));}); updateResult(); }
+		['volume','gasoline','diesel','ethanol'].forEach(id=>$(id).addEventListener('input',updateResult));
+		function updateResult(){ const selected=document.querySelector('.station.selected'); const volume=number($('volume').value); if(!selected){ $('saving').textContent=brl(0); $('cheapestPrice').textContent=brl(0); $('formula').textContent=brl(volume)+' de abastecimento x R$ 0,00 de diferença'; return } const fuel=selected.querySelector('[data-fuel="gas"]'); const local=number(fuel.value); const national=number($('gasoline').value); const difference=Math.max(0,national-local); const saving=volume*difference; $('nationalPrice').textContent=brl(national); $('cheapestPrice').textContent=brl(local); $('saving').textContent=brl(saving); $('formula').textContent=brl(volume)+' de abastecimento x '+brl(difference)+' de diferença'; $('resultCopy').textContent='Abastecendo no posto selecionado, esta operação pode capturar '+brl(saving)+' em economia estimada por mês.'; }
+		updateResult();
+	</script>
+</body>
+</html>
